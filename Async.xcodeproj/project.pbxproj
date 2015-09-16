@@ -11,6 +11,10 @@
 		BF41E4181AC5FB2400A1DDB2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF70E5141ABF135D00B4FDD4 /* Foundation.framework */; };
 		BF70E5061ABF12BC00B4FDD4 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF70E5051ABF12BC00B4FDD4 /* Async.swift */; };
 		BF70E5151ABF135D00B4FDD4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF70E5141ABF135D00B4FDD4 /* Foundation.framework */; };
+		FAFCEE341BA9F1FD0032064D /* QDispatchBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = FAFCEE321BA9F1FD0032064D /* QDispatchBlock.h */; settings = {ASSET_TAGS = (); }; };
+		FAFCEE351BA9F1FD0032064D /* QDispatchBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = FAFCEE321BA9F1FD0032064D /* QDispatchBlock.h */; settings = {ASSET_TAGS = (); }; };
+		FAFCEE361BA9F1FD0032064D /* QDispatchBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = FAFCEE331BA9F1FD0032064D /* QDispatchBlock.m */; settings = {ASSET_TAGS = (); }; };
+		FAFCEE371BA9F1FD0032064D /* QDispatchBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = FAFCEE331BA9F1FD0032064D /* QDispatchBlock.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +23,9 @@
 		BF70E5051ABF12BC00B4FDD4 /* Async.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Async.swift; path = Source/Async.swift; sourceTree = SOURCE_ROOT; };
 		BF70E5071ABF131400B4FDD4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Source/Info.plist; sourceTree = SOURCE_ROOT; };
 		BF70E5141ABF135D00B4FDD4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		FAFCEE321BA9F1FD0032064D /* QDispatchBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QDispatchBlock.h; path = Source/QDispatchBlock.h; sourceTree = SOURCE_ROOT; };
+		FAFCEE331BA9F1FD0032064D /* QDispatchBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QDispatchBlock.m; path = Source/QDispatchBlock.m; sourceTree = SOURCE_ROOT; };
+		FAFCEE381BA9F2790032064D /* Async-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Async-Bridging-Header.h"; path = "Source/Async-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,8 +69,11 @@
 		BF70E4EB1ABF124A00B4FDD4 /* Async */ = {
 			isa = PBXGroup;
 			children = (
+				FAFCEE321BA9F1FD0032064D /* QDispatchBlock.h */,
+				FAFCEE331BA9F1FD0032064D /* QDispatchBlock.m */,
 				BF70E5051ABF12BC00B4FDD4 /* Async.swift */,
 				BF70E4EC1ABF124A00B4FDD4 /* Supporting Files */,
+				FAFCEE381BA9F2790032064D /* Async-Bridging-Header.h */,
 			);
 			path = Async;
 			sourceTree = "<group>";
@@ -83,6 +93,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAFCEE351BA9F1FD0032064D /* QDispatchBlock.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,6 +101,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAFCEE341BA9F1FD0032064D /* QDispatchBlock.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -186,6 +198,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAFCEE371BA9F1FD0032064D /* QDispatchBlock.m in Sources */,
 				BF41E4161AC5FB2400A1DDB2 /* Async.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -194,6 +207,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAFCEE361BA9F1FD0032064D /* QDispatchBlock.m in Sources */,
 				BF70E5061ABF12BC00B4FDD4 /* Async.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -204,6 +218,7 @@
 		BF41E41C1AC5FB2400A1DDB2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -217,12 +232,14 @@
 				PRODUCT_NAME = Async;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		BF41E41D1AC5FB2400A1DDB2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -279,6 +296,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "Source/Async-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -318,6 +336,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "Source/Async-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -328,6 +347,7 @@
 		BF70E5001ABF124A00B4FDD4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -338,12 +358,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "dk.developmunk.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Async;
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		BF70E5011ABF124A00B4FDD4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;

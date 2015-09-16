@@ -58,9 +58,9 @@ private class GCD {
 
 public struct Async {
     
-    private let block: dispatch_block_t
+    private let block: QDispatchBlock
     
-    private init(_ block: dispatch_block_t) {
+    private init(_ block: QDispatchBlock) {
         self.block = block
     }
 }
@@ -108,9 +108,9 @@ extension Async {
     private static func asyncNow(block: dispatch_block_t, queue: dispatch_queue_t) -> Async {
         // Create a new block (Qos Class) from block to allow adding a notification to it later (see matching regular Async methods)
         // Create block with the "inherit" type
-        let _block = dispatch_block_create(DISPATCH_BLOCK_INHERIT_QOS_CLASS, block)
+        let _block = QDispatchBlock(block: block)
         // Add block to queue
-        dispatch_async(queue, _block)
+        _block.dispatchAsyncToQueue(queue)
         // Wrap block in a struct since dispatch_block_t can't be extended
         return Async(_block)
     }
@@ -125,8 +125,8 @@ extension Async {
     }
     private static func at(time: dispatch_time_t, block: dispatch_block_t, queue: dispatch_queue_t) -> Async {
         // See Async.async() for comments
-        let _block = dispatch_block_create(DISPATCH_BLOCK_INHERIT_QOS_CLASS, block)
-        dispatch_after(time, queue, _block)
+        let _block = QDispatchBlock(block: block)
+        _block.dispatchAfter(time, inQueue: queue)
         return Async(_block)
     }
 }
@@ -162,7 +162,7 @@ extension Async {
     /* cancel */
     
     public func cancel() {
-        dispatch_block_cancel(block)
+        block.cancel()
     }
     
     
@@ -173,9 +173,9 @@ extension Async {
         if seconds != 0.0 {
             let nanoSeconds = Int64(seconds * Double(NSEC_PER_SEC))
             let time = dispatch_time(DISPATCH_TIME_NOW, nanoSeconds)
-            dispatch_block_wait(block, time)
+            block.wait(time)
         } else {
-            dispatch_block_wait(block, DISPATCH_TIME_FOREVER)
+            block.wait(DISPATCH_TIME_FOREVER)
         }
     }
     
@@ -194,8 +194,8 @@ extension Async {
     
     private func chainNow(block chainingBlock: dispatch_block_t, queue: dispatch_queue_t) -> Async {
         // See Async.async() for comments
-        let _chainingBlock = dispatch_block_create(DISPATCH_BLOCK_INHERIT_QOS_CLASS, chainingBlock)
-        dispatch_block_notify(block, queue, _chainingBlock)
+        let _chainingBlock = QDispatchBlock(block: chainingBlock)
+        self.block.notifyNextBlockOnCompletion(_chainingBlock, inQueue: queue)
         return Async(_chainingBlock)
     }
     
@@ -205,20 +205,20 @@ extension Async {
     private func chainAfter(seconds: Double, block chainingBlock: dispatch_block_t, queue: dispatch_queue_t) -> Async {
         // Create a new block (Qos Class) from block to allow adding a notification to it later (see Async)
         // Create block with the "inherit" type
-        let _chainingBlock = dispatch_block_create(DISPATCH_BLOCK_INHERIT_QOS_CLASS, chainingBlock)
+        let _chainingBlock = QDispatchBlock(block: chainingBlock)
         
         // Wrap block to be called when previous block is finished
         let chainingWrapperBlock: dispatch_block_t = {
             // Calculate time from now
             let nanoSeconds = Int64(seconds * Double(NSEC_PER_SEC))
             let time = dispatch_time(DISPATCH_TIME_NOW, nanoSeconds)
-            dispatch_after(time, queue, _chainingBlock)
+            _chainingBlock.dispatchAfter(time, inQueue: queue)
         }
         // Create a new block (Qos Class) from block to allow adding a notification to it later (see Async)
         // Create block with the "inherit" type
-        let _chainingWrapperBlock = dispatch_block_create(DISPATCH_BLOCK_INHERIT_QOS_CLASS, chainingWrapperBlock)
+        let _chainingWrapperBlock = QDispatchBlock(block: chainingWrapperBlock)
         // Add block to queue *after* previous block is finished
-        dispatch_block_notify(self.block, queue, _chainingWrapperBlock)
+        self.block.notifyNextBlockOnCompletion(_chainingWrapperBlock, inQueue: queue)
         // Wrap block in a struct since dispatch_block_t can't be extended
         return Async(_chainingBlock)
     }
