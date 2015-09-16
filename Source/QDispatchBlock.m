@@ -25,7 +25,7 @@
 }
 
 - (void)dispatchAsyncToQueue:(dispatch_queue_t)queue {
-    dispatch_async(dispatch_get_global_queue(qos_class_self(), 0), self.block);
+    dispatch_async(queue, self.block);
 }
 
 - (void)notifyNextBlockOnCompletion:(QDispatchBlock *)nextBlock inQueue:(dispatch_queue_t)queue {
