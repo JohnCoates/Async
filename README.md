@@ -7,6 +7,13 @@ To replace the current version of Async with this one:
 * Add **QDispatch.m**, **QDispatch.h** to your project
 * Add **#import "QDispatch.h"** to your Objective-C bridging header
 
+Or use Cocoapods :
+
+```ruby
+pod 'Async', :git => 'https://github.com/JohnCoates/Async.git'
+```
+
+
 Thanks to eskimo for his post with example code [https://forums.developer.apple.com/message/50963](https://forums.developer.apple.com/message/50963)
 
 # Async 
